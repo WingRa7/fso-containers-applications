@@ -1,0 +1,28 @@
+Script started on Thu Dec  4 23:39:21 2025
+[1m[7m%[27m[1m[0m                                                                                                                             [0m[27m[24m[Jraine@Toms-Mac-mini fso-containers-applications % [K[?2004hddocker run -it ububnt   ntu bash[?2004l
+Unable to find image 'ubuntu:latest' locally
+latest: Pulling from library/ubuntu
+
+[1A[2K97dd3f0ce510: Pulling fs layer [1B[1A[2K97dd3f0ce510: Downloading [>                                                  ]  294.4kB/28.86MB[1B[1A[2K97dd3f0ce510: Downloading [=>                                                 ]  589.8kB/28.86MB[1B[1A[2K97dd3f0ce510: Downloading [=>                                                 ]  884.7kB/28.86MB[1B[1A[2K97dd3f0ce510: Downloading [==>                                                ]  1.475MB/28.86MB[1B[1A[2K97dd3f0ce510: Downloading [===>                                               ]   2.06MB/28.86MB[1B[1A[2K97dd3f0ce510: Downloading [=====>                                             ]  2.949MB/28.86MB[1B[1A[2K97dd3f0ce510: Downloading [=======>                                           ]  4.428MB/28.86MB[1B[1A[2K97dd3f0ce510: Downloading [===========>                                       ]    6.5MB/28.86MB[1B[1A[2K97dd3f0ce510: Downloading [===============>                                   ]  8.864MB/28.86MB[1B[1A[2K97dd3f0ce510: Downloading [===================>                               ]  11.53MB/28.86MB[1B[1A[2K97dd3f0ce510: Downloading [=======================>                           ]  13.62MB/28.86MB[1B[1A[2K97dd3f0ce510: Downloading [===========================>                       ]  15.99MB/28.86MB[1B[1A[2K97dd3f0ce510: Downloading [===============================>                   ]  18.05MB/28.86MB[1B[1A[2K97dd3f0ce510: Downloading [===================================>               ]  20.41MB/28.86MB[1B[1A[2K97dd3f0ce510: Downloading [======================================>            ]  22.19MB/28.86MB[1B[1A[2K97dd3f0ce510: Downloading [==========================================>        ]  24.56MB/28.86MB[1B[1A[2K97dd3f0ce510: Downloading [=============================================>     ]  26.03MB/28.86MB[1B[1A[2K97dd3f0ce510: Downloading [=================================================> ]  28.68MB/28.86MB[1B[1A[2K97dd3f0ce510: Verifying Checksum [1B[1A[2K97dd3f0ce510: Download complete [1B[1A[2K97dd3f0ce510: Extracting [>                                                  ]  294.9kB/28.86MB[1B[1A[2K97dd3f0ce510: Extracting [==============>                                    ]  8.552MB/28.86MB[1B[1A[2K97dd3f0ce510: Extracting [=================================>                 ]  19.17MB/28.86MB[1B[1A[2K97dd3f0ce510: Extracting [=========================================>         ]  24.18MB/28.86MB[1B[1A[2K97dd3f0ce510: Extracting [=================================================> ]  28.31MB/28.86MB[1B[1A[2K97dd3f0ce510: Extracting [==================================================>]  28.86MB/28.86MB[1B[1A[2K97dd3f0ce510: Pull complete [1BDigest: sha256:c35e29c9450151419d9448b0fd75374fec4fff364a27f176fb458d472dfc9e54
+Status: Downloaded newer image for ubuntu:latest
+[?2004h]0;root@20344d08f00f: /root@20344d08f00f:/# mkdir usr
+[?2004lmkdir: cannot create directory 'usr': File exists
+[?2004h]0;root@20344d08f00f: /root@20344d08f00f:/# ls
+[?2004l[0m[01;36mbin[0m  [01;34mboot[0m  [01;34mdev[0m  [01;34metc[0m  [01;34mhome[0m  [01;36mlib[0m  [01;34mmedia[0m  [01;34mmnt[0m  [01;34mopt[0m  [01;34mproc[0m  [01;34mroot[0m  [01;34mrun[0m  [01;36msbin[0m  [01;34msrv[0m  [01;34msys[0m  [30;42mtmp[0m  [01;34musr[0m  [01;34mvar[0m
+[?2004h]0;root@20344d08f00f: /root@20344d08f00f:/# mk  cd usr/src/app
+[?2004lbash: cd: usr/src/app: No such file or directory
+[?2004h]0;root@20344d08f00f: /root@20344d08f00f:/# cd user  r
+[?2004l[?2004h]0;root@20344d08f00f: /usrroot@20344d08f00f:/usr# cd src
+[?2004l[?2004h]0;root@20344d08f00f: /usr/srcroot@20344d08f00f:/usr/src# ls
+[?2004l[?2004h]0;root@20344d08f00f: /usr/srcroot@20344d08f00f:/usr/src# mkdir app
+[?2004l[?2004h]0;root@20344d08f00f: /usr/srcroot@20344d08f00f:/usr/src# ls
+[?2004l[0m[01;34mapp[0m
+[?2004h]0;root@20344d08f00f: /usr/srcroot@20344d08f00f:/usr/src# cd app
+[?2004l[?2004h]0;root@20344d08f00f: /usr/src/approot@20344d08f00f:/usr/src/app# touch index.js
+[?2004l[?2004h]0;root@20344d08f00f: /usr/src/approot@20344d08f00f:/usr/src/app# ls
+[?2004lindex.js
+[?2004h]0;root@20344d08f00f: /usr/src/approot@20344d08f00f:/usr/src/app# exit
+[?2004lexit
+[1m[7m%[27m[1m[0m                                                                                                                             [0m[27m[24m[Jraine@Toms-Mac-mini fso-containers-applications % [K[?2004heexit[?2004l
+
+Script done on Thu Dec  4 23:44:53 2025
