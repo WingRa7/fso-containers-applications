@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const redis = require("../redis");
+const { setAsync, getAsync } = require("../redis");
 
 const configs = require("../util/config");
 
@@ -14,6 +14,15 @@ router.get("/", async (req, res) => {
     ...configs,
     visits,
   });
+});
+
+router.get("/statistics", async (req, res) => {
+  try {
+    const count = await getAsync("added_todos");
+    res.send({ added_todos: Number(count) || 0 });
+  } catch {
+    res.status(500);
+  }
 });
 
 module.exports = router;
