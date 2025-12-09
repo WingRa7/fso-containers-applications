@@ -6,8 +6,9 @@ const TodoList = ({ todos, deleteTodo, completeTodo }) => {
       {todos
         .map((todo) => (
           <Todo
+            key={todo._id}
             todo={todo}
-            deleteToday={deleteTodo}
+            deleteTodo={deleteTodo}
             completeTodo={completeTodo}
           />
         ))

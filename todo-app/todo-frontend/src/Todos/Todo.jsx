@@ -28,7 +28,6 @@ const Todo = ({ todo, deleteTodo, completeTodo }) => {
 
   return (
     <div
-      key={todo._id}
       style={{
         display: "flex",
         justifyContent: "space-between",

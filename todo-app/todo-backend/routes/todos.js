@@ -27,7 +27,6 @@ const findByIdMiddleware = async (req, res, next) => {
   const { id } = req.params;
   req.todo = await Todo.findById(id);
   if (!req.todo) return res.sendStatus(404);
-  console.log(req.todo);
 
   next();
 };
@@ -46,10 +45,15 @@ singleRouter.get("/", async (req, res) => {
 /* PUT todo. */
 singleRouter.put("/", async (req, res) => {
   const update = req.body;
+
   try {
-    const updatedToDo = await Todo.findOneAndUpdate(req.todo.id, update, {
-      new: true,
-    });
+    const updatedToDo = await Todo.findOneAndUpdate(
+      { _id: req.todo.id },
+      update,
+      {
+        new: true,
+      }
+    );
     res.send(updatedToDo);
   } catch {
     res.status(404).end();
