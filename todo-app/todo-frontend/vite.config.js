@@ -9,4 +9,8 @@ export default defineConfig({
     globals: true,
     setupFiles: "./testSetup.js",
   },
+  server: {
+    host: true,
+    allowedHosts: true,
+  },
 });

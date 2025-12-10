@@ -25,4 +25,8 @@ router.get("/statistics", async (req, res) => {
   }
 });
 
+router.get("/ping", async (req, res) => {
+  res.send("pong");
+});
+
 module.exports = router;
