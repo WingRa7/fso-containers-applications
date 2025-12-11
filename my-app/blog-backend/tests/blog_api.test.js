@@ -11,7 +11,6 @@ const helper = require('./test_helper')
 const User = require('../models/user')
 const Blog = require('../models/blog')
 
-
 beforeEach(async () => {
   await User.deleteMany({})
   await User.insertMany(helper.initialUsers)
@@ -20,54 +19,47 @@ beforeEach(async () => {
 })
 
 describe('when there is initially some users and blogs saved', () => {
-
   test('users are returned as json', async () => {
     await api
-      .get('/api/users')
+      .get('/users')
       .expect(200)
       .expect('Content-Type', /application\/json/)
   })
 
   test('users are successfully returned', async () => {
-    const response = await api
-      .get('/api/users')
+    const response = await api.get('/users')
 
     assert.strictEqual(response.body.length, helper.initialUsers.length)
   })
 
   test('blogs are returned as json', async () => {
     await api
-      .get('/api/blogs')
+      .get('/blogs')
       .expect(200)
       .expect('Content-Type', /application\/json/)
   })
 
   test('blogs are successfully returned', async () => {
-    const response = await api
-      .get('/api/blogs')
+    const response = await api.get('/blogs')
 
     assert.strictEqual(response.body.length, helper.initialBlogs.length)
   })
 
   test('blog post has property: id', async () => {
-    const response = await api
-      .get('/api/blogs')
-      .expect(200)
+    const response = await api.get('/blogs').expect(200)
     const blogKeys = Object.keys(response.body[0])
-    assert(blogKeys.find( k => k === 'id'))
-
+    assert(blogKeys.find((k) => k === 'id'))
   })
 
   test('user succesfully created', async () => {
-
     const newUser = {
       username: 'patrick90',
       name: 'Patrick Dubbs',
-      password: 'Dublin'
+      password: 'Dublin',
     }
 
     await api
-      .post('/api/users')
+      .post('/users')
       .send(newUser)
       .expect(201)
       .expect('Content-Type', /application\/json/)
@@ -75,24 +67,23 @@ describe('when there is initially some users and blogs saved', () => {
     const usersAtEnd = await helper.usersInDb()
     assert.strictEqual(usersAtEnd.length, helper.initialUsers.length + 1)
 
-    const usernames = usersAtEnd.map(u => u.username)
+    const usernames = usersAtEnd.map((u) => u.username)
     assert(usernames.includes('patrick90'))
-    const names = usersAtEnd.map(u => u.name)
+    const names = usersAtEnd.map((u) => u.name)
     assert(names.includes('Patrick Dubbs'))
   })
 
   test('blog post succesfully created', async () => {
-
     const newBlog = {
       title: 'An archive for the 1980s microcomputer revolution',
       author: 'Lenny Carrots',
       url: 'https://clp.bbcrewind.co.uk/history',
       likes: 8,
-      userId: '6815df37029bd474200287d2'
+      userId: '6815df37029bd474200287d2',
     }
 
     await api
-      .post('/api/blogs')
+      .post('/blogs')
       .set('Authorization', `Bearer ${helper.initialToken()}`)
       .send(newBlog)
       .expect(201)
@@ -101,27 +92,26 @@ describe('when there is initially some users and blogs saved', () => {
     const blogsAtEnd = await helper.blogsInDb()
     assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length + 1)
 
-    const titles = blogsAtEnd.map(b => b.title)
+    const titles = blogsAtEnd.map((b) => b.title)
     assert(titles.includes('An archive for the 1980s microcomputer revolution'))
-    const authors = blogsAtEnd.map(b => b.author)
+    const authors = blogsAtEnd.map((b) => b.author)
     assert(authors.includes('Lenny Carrots'))
-    const urls = blogsAtEnd.map(b => b.url)
+    const urls = blogsAtEnd.map((b) => b.url)
     assert(urls.includes('https://clp.bbcrewind.co.uk/history'))
   })
 
   describe('when post requests are missing fields / headers', () => {
-
     test('blog post created without valid token returns status code 401 Unauthorized', async () => {
       const newBlog = {
         title: 'Forgetting to add auth header',
         author: 'Lenny Carrots',
         url: 'https://auth.com/blog/headerz',
         likes: 0,
-        userId: '6815df37029bd474200287d2'
+        userId: '6815df37029bd474200287d2',
       }
 
       await api
-        .post('/api/blogs')
+        .post('/blogs')
         .set('Authorization', 'invalid token')
         .send(newBlog)
         .expect(401)
@@ -130,30 +120,31 @@ describe('when there is initially some users and blogs saved', () => {
       const blogsAtEnd = await helper.blogsInDb()
       assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length)
 
-      const titles = blogsAtEnd.map(b => b.title)
+      const titles = blogsAtEnd.map((b) => b.title)
       assert(!titles.includes('Forgetting to add auth header'))
-      const urls = blogsAtEnd.map(b => b.url)
+      const urls = blogsAtEnd.map((b) => b.url)
       assert(!urls.includes('https://auth.com/blog/headerz'))
     })
-
 
     test('blog post created without likes property defaults to 0 likes', async () => {
       const newBlog = {
         title: 'The man who built his own WH Smith',
         author: 'Lenny Carrots',
         url: 'https://filmstories.co.uk/features/the-man-who-built-his-own-wh-smith/',
-        userId: '6815df37029bd474200287d2'
+        userId: '6815df37029bd474200287d2',
       }
 
       await api
-        .post('/api/blogs')
+        .post('/blogs')
         .set('Authorization', `Bearer ${helper.initialToken()}`)
         .send(newBlog)
         .expect(201)
         .expect('Content-Type', /application\/json/)
 
       const blogsAtEnd = await helper.blogsInDb()
-      const blogMissLikes = blogsAtEnd.find((b) => b.title === 'The man who built his own WH Smith' )
+      const blogMissLikes = blogsAtEnd.find(
+        (b) => b.title === 'The man who built his own WH Smith'
+      )
       assert(blogMissLikes.likes === 0)
     })
 
@@ -162,11 +153,11 @@ describe('when there is initially some users and blogs saved', () => {
         author: 'Lenny Carrots',
         url: 'https://www.dismalfailure.com/p/forgotmytitle',
         likes: 2,
-        userId: '6815df37029bd474200287d2'
+        userId: '6815df37029bd474200287d2',
       }
 
       await api
-        .post('/api/blogs')
+        .post('/blogs')
         .set('Authorization', `Bearer ${helper.initialToken()}`)
         .send(newBlog)
         .expect(400)
@@ -178,39 +169,39 @@ describe('when there is initially some users and blogs saved', () => {
         title: 'The blog that was never published',
         author: 'Lenny Carrots',
         likes: 0,
-        userId: '6815df37029bd474200287d2'
+        userId: '6815df37029bd474200287d2',
       }
 
       await api
-        .post('/api/blogs')
+        .post('/blogs')
         .set('Authorization', `Bearer ${helper.initialToken()}`)
         .send(newBlog)
         .expect(400)
         .expect('Content-Type', /application\/json/)
     })
-
-
   })
 
   describe('when modifying exisiting blogs', () => {
-    test ('blog post succesfully deleted', async () => {
+    test('blog post succesfully deleted', async () => {
       const blogsAtStart = await helper.blogsInDb()
-      const blogToDelete = blogsAtStart.find((b) => b.title === 'To be deleted by test')
+      const blogToDelete = blogsAtStart.find(
+        (b) => b.title === 'To be deleted by test'
+      )
 
       await api
-        .delete(`/api/blogs/${blogToDelete.id}`)
+        .delete(`/blogs/${blogToDelete.id}`)
         .set('Authorization', `Bearer ${helper.initialToken()}`)
         .expect(204)
 
       const blogsAtEnd = await helper.blogsInDb()
 
-      const titles = blogsAtEnd.map(b => b.title)
+      const titles = blogsAtEnd.map((b) => b.title)
       assert(!titles.includes(blogToDelete.title))
 
-      assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length -1)
+      assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length - 1)
     })
 
-    test ('blog post succesfully updated', async () => {
+    test('blog post succesfully updated', async () => {
       const blogsAtStart = await helper.blogsInDb()
       const blogToUpdate = blogsAtStart[0]
 
@@ -223,7 +214,7 @@ describe('when there is initially some users and blogs saved', () => {
       }
 
       await api
-        .put(`/api/blogs/${blogToUpdate.id}`)
+        .put(`/blogs/${blogToUpdate.id}`)
         .set('Authorization', `Bearer ${helper.initialToken()}`)
         .send(updatedBlog)
         .expect(200)
@@ -231,7 +222,7 @@ describe('when there is initially some users and blogs saved', () => {
 
       const blogsAtEnd = await helper.blogsInDb()
 
-      const titles = blogsAtEnd.map(n => n.title)
+      const titles = blogsAtEnd.map((n) => n.title)
       assert(titles.includes(updatedBlog.title))
 
       assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length)
@@ -259,7 +250,7 @@ describe('when there is initially one user in db', () => {
     }
 
     await api
-      .post('/api/users')
+      .post('/users')
       .send(newUser)
       .expect(201)
       .expect('Content-Type', /application\/json/)
@@ -267,7 +258,7 @@ describe('when there is initially one user in db', () => {
     const usersAtEnd = await helper.usersInDb()
     assert.strictEqual(usersAtEnd.length, usersAtStart.length + 1)
 
-    const usernames = usersAtEnd.map(u => u.username)
+    const usernames = usersAtEnd.map((u) => u.username)
     assert(usernames.includes(newUser.username))
   })
 
@@ -281,7 +272,7 @@ describe('when there is initially one user in db', () => {
     }
 
     await api
-      .post('/api/users')
+      .post('/users')
       .send(newUser)
       .expect(400)
       .expect('Content-Type', /application\/json/)
@@ -290,7 +281,7 @@ describe('when there is initially one user in db', () => {
     const usersAtEnd = await helper.usersInDb()
     assert.strictEqual(usersAtEnd.length, usersAtStart.length)
 
-    const usernames = usersAtEnd.map(u => u.username)
+    const usernames = usersAtEnd.map((u) => u.username)
     assert(!usernames.includes(newUser.username))
   })
 
@@ -304,7 +295,7 @@ describe('when there is initially one user in db', () => {
     }
 
     await api
-      .post('/api/users')
+      .post('/users')
       .send(newUser)
       .expect(400)
       .expect('Content-Type', /application\/json/)
@@ -313,10 +304,9 @@ describe('when there is initially one user in db', () => {
     const usersAtEnd = await helper.usersInDb()
     assert.strictEqual(usersAtEnd.length, usersAtStart.length)
 
-    const usernames = usersAtEnd.map(u => u.username)
+    const usernames = usersAtEnd.map((u) => u.username)
     assert(!usernames.includes(newUser.username))
   })
-
 })
 
 after(async () => {

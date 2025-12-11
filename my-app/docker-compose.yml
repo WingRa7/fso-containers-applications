@@ -1,0 +1,30 @@
+name: blog
+
+services:
+
+  app:
+    image: blog-frontend
+    pull_policy: never
+    build:
+      context: ./blog-frontend/
+      dockerfile: Dockerfile
+    container_name: blog-frontend
+
+  server:
+    image: blog-backend
+    pull_policy: never
+    build:
+      context: ./blog-backend/
+      dockerfile: Dockerfile
+    container_name: blog-backend
+    env_file: ./blog-backend/.env
+
+  nginx:
+    image: nginx:1.20.1
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:80
+    container_name: reverse-proxy
+    depends_on:
+      - app
