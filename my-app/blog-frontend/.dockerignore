@@ -1,0 +1,4 @@
+# blog-frontend/.dockerignore
+
+node_modules
+DS_Store
